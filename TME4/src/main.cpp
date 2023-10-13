@@ -28,7 +28,7 @@ int main () {
 			auto m = ::rand()%100;
 			threads.push_back(thread(&Banque::transfert,&b,i,j,m));
 			//8) cout<<b.comptabiliser(100000);
-
+			//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
 		}
 
 
