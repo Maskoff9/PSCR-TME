@@ -3,6 +3,7 @@
 using namespace std;
 
 namespace pr {
+mutex mu;
 void Compte::crediter (unsigned int val) {
 	unique_lock<mutex> g(m);
 	solde+=val ;
@@ -24,6 +25,11 @@ Compte::Compte(const Compte & other) {
 	other.m.lock();
 	solde = other.solde;
 	other.m.unlock();
+}
+
+mutex & getMutex(){
+	return mu;
+}
 }
 
 }
