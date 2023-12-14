@@ -25,11 +25,22 @@ Compte::Compte(const Compte & other) {
 	other.m.lock();
 	solde = other.solde;
 	other.m.unlock();
+	vu = false;
 }
 
-mutex & getMutex(){
+mutex & getMutexC(){
 	return mu;
 }
+
+bool Compte::EstVu() const {
+    return vu;
 }
 
+void Compte::SetVu() {
+    vu = true;
 }
+
+
+}
+
+
