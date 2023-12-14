@@ -1,19 +1,30 @@
 #include "Banque.h"
 
 #include <iostream>
+#include <algorithm>
 
 using namespace std;
 
 namespace pr {
 mutex m ;
 void Banque::transfert(size_t deb, size_t cred, unsigned int val) {
-	m.lock();
+	std::unique_lock<std::mutex> g(m);
+
+	//q10
+	if (std::find(comptesVus.begin(), comptesVus.end(), deb) != comptesVus.end()) {
+        
+        return;
+    }
+
 	Compte & debiteur = comptes[deb];
 	Compte & crediteur = comptes[cred];
 	if (debiteur.debiter(val)) {
 		crediteur.crediter(val);
 	}
-	m.unlock();
+
+	debiteur.SetVu();
+    comptesVus.push_back(deb);
+
 }
 size_t Banque::size() const {
 	return comptes.size();
@@ -33,7 +44,10 @@ bool Banque::comptabiliser (int attendu) const {
 	}
 	return bilan == attendu;
 }
-mutex & getMutex(){
+mutex & getMutexB(){
 	return m;
 }
+
+
+
 }
